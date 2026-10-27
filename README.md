@@ -7,7 +7,6 @@ Jiaxin Gao, Ziyu Yue, Yaohua Liu, Danchen Cui, Zhihui Zhao, Zhixun Su
 **NeurIPS 2026**
 
 [Project page](https://moriyaya.github.io/DeLang-SR/) |
-[Paper and discussion](https://openreview.net/forum?id=smfrrq0yyf) |
 [Pretrained models](https://github.com/moriyaya/DeLang-SR/releases/tag/v1.0.0)
 
 DeLang-SR restores dark low-resolution images with one conditioned SD3 flow update.
@@ -98,7 +97,6 @@ number of images, missing pairs, and shape mismatches before using an average.
 Training requires paired LQ/HQ data, the SD3 base model, and the official DINOv3
 repository and ConvNeXt-Large pretrained weights. DINOv3 is used only for the
 training loss. Follow the setup and commands in [TRAINING.md](TRAINING.md).
-Only the full DeLang-SR implementation is included in this release.
 
 ## RELLISUR results
 
