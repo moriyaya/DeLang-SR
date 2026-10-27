@@ -1,0 +1,3 @@
+-r requirements.txt
+timm==1.0.19
+einops==0.8.1

@@ -1,0 +1,40 @@
+{
+  "2": {
+    "scale": 2,
+    "checkpoint_step": 20000,
+    "base_model": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "url": "https://github.com/moriyaya/DeLang-SR/releases/download/v1.0.0/delang_sr_x2.tar.gz",
+    "size_bytes": 676402726,
+    "sha256": "47b1593982bf0d6de0a625e37e9bf20b6c5fcda3df53e240de930d96cbb68ef9",
+    "files": {
+      "sd3_adapter/adapter_config.json": "248e721016a2a4897d9d8bb043736cc989334a8fc21657d7c95c11c7d5e79e84",
+      "sd3_adapter/adapter_model.safetensors": "0fd1e9c0d066ac75f579310fa3c50a5863bfcb4ea914bfbb516a9b1a07c70d3f",
+      "vae_encoder_adapter/adapter_config.json": "d56283bee2b7998e104012d45014304d5ad02d2e54912574d23669d47f190229",
+      "vae_encoder_adapter/adapter_model.safetensors": "d7af54ca4e0389a31ef06186ef7a523150682291659e3a1a2691abfe9ddddcfb",
+      "delang_modules.pt": "985bc14d170d90f0f5040bb9b2f16ca0561bdc15bc478e5c9f783152771a7ddd",
+      "model_index.json": "d04d898dd2bb4ae9069dfad2172632afaefc408d076d58764834a942fbcd32c9",
+      "README.md": "535f53d9ea137afa9b0deb3fdf5487be9bf37ad4f915de5de9cc0222178a7688",
+      "NOTICE": "0c32aaf5f6c7b65d729f0691252ba993a7c0b3b37a1635c1d927a79a21000476",
+      "STABLE_DIFFUSION_3_LICENSE.txt": "01889551358d3e37d16dfcd1852e85be0bd8470f00930d39ed361e754ab1cc14"
+    }
+  },
+  "4": {
+    "scale": 4,
+    "checkpoint_step": 20000,
+    "base_model": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "url": "https://github.com/moriyaya/DeLang-SR/releases/download/v1.0.0/delang_sr_x4.tar.gz",
+    "size_bytes": 676470591,
+    "sha256": "df5f3576c6b422f217ddd99f0892bd6492cb4db6c90a14d0e58af80f4fa21319",
+    "files": {
+      "sd3_adapter/adapter_config.json": "da0d099f064e108dbd9140c6cba36d82afab82deba19acbbb7a51457058746bb",
+      "sd3_adapter/adapter_model.safetensors": "fffbc94fe04e1a3a2370d8d3326d917a8ff87d1a17babfead6624dee3fb4585f",
+      "vae_encoder_adapter/adapter_config.json": "b15348c2f6df2aceecc3e6d70255b752caa5539089170f6e36371b2a32597b57",
+      "vae_encoder_adapter/adapter_model.safetensors": "440fc5fbe8bd5dd9e75ef3bc7def28c71da70cf6f496130686f08ab51b776dd4",
+      "delang_modules.pt": "85e924f32a3158e7bd7ed77b1c431975128f47c111947ae0032b587eb0a57c79",
+      "model_index.json": "37ad2b8bf2a8aa909d0bde51416245c98583b024a7c0dad634f357ff530c69b6",
+      "README.md": "c3cee1238486912d2b060d7ecdd436662493a3443e5af20bf948b06fb0c201d8",
+      "NOTICE": "0c32aaf5f6c7b65d729f0691252ba993a7c0b3b37a1635c1d927a79a21000476",
+      "STABLE_DIFFUSION_3_LICENSE.txt": "01889551358d3e37d16dfcd1852e85be0bd8470f00930d39ed361e754ab1cc14"
+    }
+  }
+}

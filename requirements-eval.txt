@@ -1,0 +1,6 @@
+-r requirements.txt
+pyiqa==0.1.13
+scikit-image>=0.23
+pandas>=2.2
+openpyxl>=3.1
+

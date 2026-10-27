@@ -1,0 +1,12 @@
+diffusers==0.34.0
+transformers==4.55.2
+peft==0.17.0
+accelerate==1.1.0
+omegaconf==2.3.0
+numpy>=1.26,<3
+Pillow>=10
+tqdm>=4.66
+safetensors>=0.4
+sentencepiece==0.2.1
+protobuf>=5
+

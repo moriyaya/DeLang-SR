@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "Please cite the paper when using DeLang-SR."
+type: conference-paper
+title: "Decoupling Direction and Magnitude: Language-Steered Flow Matching for Super-Resolution in the Dark"
+authors:
+  - family-names: Gao
+    given-names: Jiaxin
+  - family-names: Yue
+    given-names: Ziyu
+  - family-names: Liu
+    given-names: Yaohua
+  - family-names: Cui
+    given-names: Danchen
+  - family-names: Zhao
+    given-names: Zhihui
+  - family-names: Su
+    given-names: Zhixun
+year: 2026
+conference:
+  name: "Neural Information Processing Systems (NeurIPS)"
+repository-code: "https://github.com/moriyaya/DeLang-SR"
+url: "https://moriyaya.github.io/DeLang-SR/"
+

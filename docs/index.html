@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DeLang-SR: Decoupling Direction and Magnitude. Language-Steered Flow Matching for Super-Resolution in the Dark. NeurIPS 2026.">
+  <meta property="og:title" content="DeLang-SR | NeurIPS 2026">
+  <meta property="og:description" content="Language-steered flow matching for super-resolution in the dark. Paper, code, and pretrained x2 and x4 models.">
+  <meta property="og:image" content="https://moriyaya.github.io/DeLang-SR/assets/pipeline.png">
+  <meta property="og:url" content="https://moriyaya.github.io/DeLang-SR/">
+  <title>DeLang-SR | NeurIPS 2026</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#top">DeLang-SR</a>
+    <nav aria-label="Section navigation"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#quantitative">Results</a><a href="#models">Models</a><a href="#citation">Citation</a></nav>
+  </header>
+  <main id="top">
+    <section class="hero" aria-labelledby="paper-title">
+      <p class="eyebrow">NeurIPS 2026 · Poster</p>
+      <h1 id="paper-title">Decoupling Direction and Magnitude:<br>Language-Steered Flow Matching for<br>Super-Resolution in the Dark</h1>
+      <p class="authors">Jiaxin Gao<sup>1</sup>, Ziyu Yue<sup>2</sup>, Yaohua Liu<sup>3</sup>,<br>Danchen Cui<sup>4</sup>, Zhihui Zhao<sup>4</sup>, Zhixun Su<sup>2</sup></p>
+      <p class="affiliations"><span><sup>1</sup> The Hong Kong Polytechnic University</span><span><sup>2</sup> Dalian University of Technology</span><span><sup>3</sup> The University of Hong Kong</span><span><sup>4</sup> Taiyuan University of Technology</span></p>
+      <div class="resource-links" aria-label="Project resources">
+        <a class="primary" href="https://openreview.net/forum?id=smfrrq0yyf">Paper</a>
+        <a href="https://github.com/moriyaya/DeLang-SR">Code repository</a>
+        <a href="https://github.com/moriyaya/DeLang-SR/releases/tag/v1.0.0">Pretrained models</a>
+        <a href="#citation">BibTeX</a>
+      </div>
+    </section>
+
+    <section class="content-section overview" id="overview">
+      <p class="section-kicker">Background and motivation</p>
+      <h2>Super-resolution in the dark is spatially heterogeneous.</h2>
+      <p>A dark low-resolution image is not uniformly corrupted. Some regions are dominated by underexposure and shadow noise, where visibility and structures are severely suppressed; other regions remain relatively reliable and should stay close to the observation. Applying the same restoration strength everywhere is therefore intrinsically risky: weak updates fail in shadows, while strong updates hallucinate textures or distort reliable details.</p>
+      <p>DeLang-SR revisits this problem from the perspective of flow dynamics. The predicted velocity determines the <em>direction</em> of restoration, while the update magnitude determines how far each latent location moves along that direction. DeLang-SR combines degradation-language conditions and image-specific visual evidence for direction steering, with a spatial update-strength field for magnitude control.</p>
+    </section>
+
+    <section class="content-section" id="method">
+      <p class="section-kicker">Core method</p>
+      <h2>Direction steering and magnitude control.</h2>
+      <p>DeLang-SR translates measurable low-light statistics into structured degradation language. The language-derived condition is complemented by visual degradation tokens extracted from the input image. Together, they steer the SD3 velocity field, while a degradation-aware spatial field controls the local update magnitude.</p>
+      <figure class="paper-figure pipeline"><a href="assets/pipeline.png" target="_blank" rel="noopener"><img src="assets/pipeline.png" alt="Figure 1 from the paper: the complete DeLang-SR framework, with degradation condition construction, visual tokens, and the magnitude-controlled flow update."></a><figcaption><strong>Figure 1.</strong> Pipeline of DeLang-SR. Degradation language and visual tokens form the fused condition to steer the velocity direction, while the continuous descriptor and local evidence predict the spatial update magnitude.</figcaption></figure>
+
+      <article class="method-block">
+        <h3>Degradation conditions from low-light statistics</h3>
+        <p>Measurable statistics cover exposure, contrast, detail, darkness, shadow noise, illumination non-uniformity, and color shift. They are mapped into a continuous descriptor, discrete degradation labels, and a degradation-language prompt:</p>
+        <figure class="equation"><img src="assets/equation-condition.png" alt="Equation 2: degradation statistics map to delta, kappa, and the degradation prompt. Delta contains seven entries and the prompt is generated from the discrete labels."></figure>
+        <p>At inference time, degradation conditions are estimated from the low-quality input itself. The language prompt is treated as a coarse restoration intent rather than an oracle annotation. No high-quality reference, manual prompt, or oracle degradation label is required.</p>
+      </article>
+
+      <article class="method-block">
+        <h3>Language and visual evidence for direction steering</h3>
+        <p>The degradation prompt provides a global restoration intent. The frozen SD3 text encoder produces the language embedding, while a visual token encoder extracts image-specific evidence from the RGB input, luminance, darkness, local contrast, and global low-light statistics. The two representations are concatenated:</p>
+        <figure class="equation compact-equation"><img src="assets/equation-fused.png" alt="Equation 3: H sub d equals the concatenation of the language embedding h sub ell and visual degradation tokens h sub v."></figure>
+        <p>The fused condition is injected into the SD3 flow transformer to steer the restoration direction.</p>
+      </article>
+
+      <article class="method-block">
+        <h3>Spatial update-strength field for magnitude control</h3>
+        <p>The update-strength predictor combines local visual evidence with the continuous degradation descriptor. Its output is bounded and predicted at latent resolution, then broadcast along latent channels:</p>
+        <figure class="equation"><img src="assets/equation-strength.png" alt="Equation 4: M phi of y and delta equals sigma min plus sigma max minus sigma min, multiplied by the sigmoid of the visual and descriptor-conditioned predictor."></figure>
+        <p>The field acts as a spatially varying Euler step-size. It controls the local integration magnitude along the predicted restoration velocity:</p>
+        <figure class="equation"><img src="assets/equation-update.png" alt="Equation 1: z hat equals z y minus M phi of y and delta elementwise multiplied by the conditioned velocity; the restored image is obtained by decoding z hat."></figure>
+      </article>
+    </section>
+
+    <section class="content-section" id="quantitative">
+      <p class="section-kicker">Quantitative results</p>
+      <h2>Paired and no-reference evaluation.</h2>
+      <p>We evaluate DeLang-SR on RELLISUR under the ×2 and ×4 settings, measuring fidelity, perceptual quality, exposure recovery, and color consistency. The tables below reproduce the complete comparisons from the paper.</p>
+      <figure class="paper-figure"><div class="wide-figure"><a href="assets/paper-table-1.png" target="_blank" rel="noopener"><img src="assets/paper-table-1.png" loading="lazy" alt="Table 1 from the paper: all-method paired RELLISUR comparisons at x2 and x4, reporting PSNR, SSIM, LPIPS, DISTS, ExpErr, and ColorErr with the original top-three highlighting."></a></div></figure>
+      <figure class="paper-figure"><div class="wide-figure"><a href="assets/paper-table-2.png" target="_blank" rel="noopener"><img src="assets/paper-table-2.png" loading="lazy" alt="Table 2 from the paper: no-reference RELLISUR comparisons at x2 and x4, reporting NIQE, MUSIQ, MANIQA, and CLIP-IQA with the original highlighting."></a></div></figure>
+      <h3 class="subheading">Perceptual quality on real DarkFace images</h3>
+      <p>DarkFace evaluates restoration on real nighttime images without paired high-quality references. The paper reports the distribution of four no-reference perceptual quality scores over 100 images.</p>
+      <figure class="paper-figure"><div class="wide-figure"><a href="assets/paper-darkface-distribution.png" target="_blank" rel="noopener"><img src="assets/paper-darkface-distribution.png" loading="lazy" alt="Figure 4 from the paper: violin distributions of NIQE, MUSIQ, MANIQA, and CLIP-IQA on DarkFace at x2, with per-method means."></a></div></figure>
+    </section>
+
+    <section class="content-section" id="qualitative">
+      <p class="section-kicker">Qualitative results</p>
+      <h2>Visual comparisons from the paper.</h2>
+      <h3>RELLISUR · ×2 and ×4</h3>
+      <p>The comparison panels below show the original paper's selected regions and method ordering. The top two examples use ×2 super-resolution; the bottom two use ×4.</p>
+      <figure class="paper-figure"><div class="wide-figure"><a href="assets/paper-rellisur-qualitative.png" target="_blank" rel="noopener"><img src="assets/paper-rellisur-qualitative.png" loading="lazy" alt="Figure 5 from the paper: four rows of RELLISUR visual comparisons at x2 and x4 with the paper's original GT region boxes and aligned crops for all methods."></a></div></figure>
+      <h3 class="subheading">DarkFace · ×2</h3>
+      <p>The original DarkFace panel compares the input, ASID, PFT-SR, CATANet, DHGM, DOD, and DeLang-SR, with the corresponding detail crops.</p>
+      <figure class="paper-figure"><div class="wide-figure"><a href="assets/paper-darkface-qualitative.png" target="_blank" rel="noopener"><img src="assets/paper-darkface-qualitative.png" loading="lazy" alt="Figure 6 from the paper: DarkFace x2 visual comparisons and aligned detail crops from the original manuscript."></a></div></figure>
+    </section>
+
+    <section class="content-section" id="models">
+      <p class="section-kicker">Code and pretrained models</p>
+      <h2>Reproduce and compare.</h2>
+      <p>The release provides the full DeLang-SR implementation, training configurations, inference, and per-image metric evaluation. The ×2 and ×4 adapter packages contain the transformer LoRA, VAE encoder LoRA, and DeLang control modules. The pretrained SD3 Medium base model is obtained separately under its original terms.</p>
+      <div class="download-links"><a href="https://github.com/moriyaya/DeLang-SR">Code &amp; instructions ↗</a><a href="https://github.com/moriyaya/DeLang-SR/releases/download/v1.0.0/delang_sr_x2.tar.gz">Download ×2 model ↓</a><a href="https://github.com/moriyaya/DeLang-SR/releases/download/v1.0.0/delang_sr_x4.tar.gz">Download ×4 model ↓</a></div>
+    </section>
+
+    <section class="content-section citation" id="citation">
+      <div class="citation-heading"><div><p class="section-kicker">Citation</p><h2>BibTeX</h2></div><button type="button" id="copy-citation">Copy BibTeX</button></div>
+      <pre><code id="bibtex">@inproceedings{gao2026delangsr,
+  title     = {Decoupling Direction and Magnitude:
+               Language-Steered Flow Matching for
+               Super-Resolution in the Dark},
+  author    = {Gao, Jiaxin and Yue, Ziyu and Liu, Yaohua and
+               Cui, Danchen and Zhao, Zhihui and Su, Zhixun},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year      = {2026}
+}</code></pre><p id="copy-status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <footer><a class="wordmark" href="#top">DeLang-SR</a><span>NeurIPS 2026</span><a href="https://github.com/moriyaya/DeLang-SR">GitHub</a><a href="mailto:jiaxinn.gao@outlook.com">Contact</a></footer>
+</body>
+</html>
