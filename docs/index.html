@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="DeLang-SR: Decoupling Direction and Magnitude. Language-Steered Flow Matching for Super-Resolution in the Dark. NeurIPS 2026.">
   <meta property="og:title" content="DeLang-SR | NeurIPS 2026">
-  <meta property="og:description" content="Language-steered flow matching for super-resolution in the dark. Paper, code, and pretrained x2 and x4 models.">
+  <meta property="og:description" content="Language-steered flow matching for super-resolution in the dark. Paper and official code.">
   <meta property="og:image" content="https://moriyaya.github.io/DeLang-SR/assets/pipeline.png">
   <meta property="og:url" content="https://moriyaya.github.io/DeLang-SR/">
   <title>DeLang-SR | NeurIPS 2026</title>
@@ -15,18 +15,18 @@
 <body>
   <header class="site-header">
     <a class="wordmark" href="#top">DeLang-SR</a>
-    <nav aria-label="Section navigation"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#quantitative">Results</a><a href="#models">Models</a><a href="#citation">Citation</a></nav>
+    <nav aria-label="Section navigation"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#quantitative">Results</a><a href="#citation">Citation</a></nav>
   </header>
   <main id="top">
     <section class="hero" aria-labelledby="paper-title">
       <p class="eyebrow">NeurIPS 2026 · Poster</p>
       <h1 id="paper-title">Decoupling Direction and Magnitude:<br>Language-Steered Flow Matching for<br>Super-Resolution in the Dark</h1>
-      <p class="authors">Jiaxin Gao<sup>1</sup>, Ziyu Yue<sup>2</sup>, Yaohua Liu<sup>3</sup>,<br>Danchen Cui<sup>4</sup>, Zhihui Zhao<sup>4</sup>, Zhixun Su<sup>2</sup></p>
+      <p class="authors">Jiaxin Gao<sup>1</sup>, Ziyu Yue<sup>2</sup>, Yaohua Liu<sup>3,*</sup>,<br>Danchen Cui<sup>4</sup>, Zhihui Zhao<sup>4</sup>, Zhixun Su<sup>2</sup></p>
       <p class="affiliations"><span><sup>1</sup> The Hong Kong Polytechnic University</span><span><sup>2</sup> Dalian University of Technology</span><span><sup>3</sup> The University of Hong Kong</span><span><sup>4</sup> Taiyuan University of Technology</span></p>
+      <p class="corresponding-author"><sup>*</sup> Corresponding author: Yaohua Liu · <a href="mailto:liuyaohua.918@gmail.com">liuyaohua.918@gmail.com</a></p>
       <div class="resource-links" aria-label="Project resources">
         <a class="primary" href="https://openreview.net/forum?id=smfrrq0yyf">Paper</a>
         <a href="https://github.com/moriyaya/DeLang-SR">Code repository</a>
-        <a href="https://github.com/moriyaya/DeLang-SR/releases/tag/v1.0.0">Pretrained models</a>
         <a href="#citation">BibTeX</a>
       </div>
     </section>
@@ -87,13 +87,6 @@
       <h3 class="subheading">DarkFace · ×2</h3>
       <p>The original DarkFace panel compares the input, ASID, PFT-SR, CATANet, DHGM, DOD, and DeLang-SR, with the corresponding detail crops.</p>
       <figure class="paper-figure"><div class="wide-figure"><a href="assets/paper-darkface-qualitative.png" target="_blank" rel="noopener"><img src="assets/paper-darkface-qualitative.png" loading="lazy" alt="Figure 6 from the paper: DarkFace x2 visual comparisons and aligned detail crops from the original manuscript."></a></div></figure>
-    </section>
-
-    <section class="content-section" id="models">
-      <p class="section-kicker">Code and pretrained models</p>
-      <h2>Reproduce and compare.</h2>
-      <p>The release provides the full DeLang-SR implementation, training configurations, inference, and per-image metric evaluation. The ×2 and ×4 adapter packages contain the transformer LoRA, VAE encoder LoRA, and DeLang control modules. The pretrained SD3 Medium base model is obtained separately under its original terms.</p>
-      <div class="download-links"><a href="https://github.com/moriyaya/DeLang-SR">Code &amp; instructions ↗</a><a href="https://github.com/moriyaya/DeLang-SR/releases/download/v1.0.0/delang_sr_x2.tar.gz">Download ×2 model ↓</a><a href="https://github.com/moriyaya/DeLang-SR/releases/download/v1.0.0/delang_sr_x4.tar.gz">Download ×4 model ↓</a></div>
     </section>
 
     <section class="content-section citation" id="citation">
